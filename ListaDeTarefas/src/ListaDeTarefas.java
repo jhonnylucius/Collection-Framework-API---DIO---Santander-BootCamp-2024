@@ -45,7 +45,7 @@ class ListaTarefas {
 public class ListaDeTarefas {
     public static void main(String[] args) {
         ListaTarefas lista = new ListaTarefas();
-        lista.adicionarTarefa("Comprar pão");
+        lista.adicionarTarefa("Comprar o pão");
         lista.adicionarTarefa("Estudar para a prova");
 
         System.out.println("Número total de tarefas: " + lista.obterNumeroTotalTarefas());  // Output: 2
