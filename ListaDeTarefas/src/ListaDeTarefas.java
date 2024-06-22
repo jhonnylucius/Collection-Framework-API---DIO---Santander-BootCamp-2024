@@ -50,7 +50,7 @@ public class ListaDeTarefas {
 
         System.out.println("Número total de tarefas: " + lista.obterNumeroTotalTarefas());  // Output: 2
         System.out.println("Descrições das tarefas: " + lista.obterDescricoesTarefas());   // Output: [Comprar pão, Estudar para a prova]
-
+      
         lista.removerTarefa("Comprar pão");
 
         System.out.println("Pão comprado, retirando da lista.");
