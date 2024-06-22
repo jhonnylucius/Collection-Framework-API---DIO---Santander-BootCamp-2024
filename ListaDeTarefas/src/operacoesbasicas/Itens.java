@@ -4,8 +4,8 @@ public class Itens {
     private String descricao;
     private Double preco;
     private int quantidade;
-    private Itens itens;
-    private Double valorTotal = itens.getPreco() * itens.getQuantidade();
+    
+    
 
     public Itens(String descricao) {
         this.descricao = descricao;
@@ -28,8 +28,5 @@ public class Itens {
     public int getQuantidade() {
         return quantidade;
     }
-    public Double valorTotal() {
-        this.valorTotal = valorTotal;
-        return valorTotal();
+  
     }
-}
