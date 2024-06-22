@@ -39,4 +39,5 @@ Exercícios:
 - `removerTarefa(String descricao)`: Remove uma tarefa da lista com base em sua descrição.
 - `obterNumeroTotalTarefas()`: Retorna o número total de tarefas na lista.
 - `obterDescricoesTarefas()`: Retorna uma lista contendo a descrição de todas as tarefas na lista.
+- Acrescentado um Scanner para o usuário poder escolher as opções acima, além de poder verificar os metodos de maneira mais fávil
 </p>
