@@ -57,6 +57,8 @@ public class ListaTarefa {
         ListaTarefa listaTarefa = new ListaTarefa();
         Scanner scanner = new Scanner(System.in);
 
+        //  opções para o usuário escolher
+
         while (true) {
             System.out.println("\nMenu:");
             System.out.println("1. Adicionar Tarefa");
@@ -65,7 +67,7 @@ public class ListaTarefa {
             System.out.println("4. Listar Tarefas Removidas"); // Nova opção para listar tarefas removidas
             System.out.println("5. Sair");
             System.out.print("Escolha uma opção: ");
-
+//colocando um switch para fazer a interação com as opões escolhidas
             try {
                 int opcao = scanner.nextInt();
                 scanner.nextLine(); // Consumir a quebra de linha
@@ -96,6 +98,7 @@ public class ListaTarefa {
                     default:
                         System.out.println("Por favor digite o nº da opção que você quer escolher.");
                 }
+                //tratamento da exeção caso não digite um número da opção corretamente
             } catch (InputMismatchException e) {
                 System.out.println("Por favor digite o nº da opção que você quer escolher.");
                 scanner.nextLine(); // Limpa o buffer de entrada
