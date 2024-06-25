@@ -1,50 +1,58 @@
+
 package carrinhoDeCompra;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
 public class CarrinhoDeCompras {
-    private List<Itens> itensList;
-    private List<Itens> itensRemovidos;
+
+    private Map<String, Item> itens;
+    private List<Item> itensRemovidos;
 
     public CarrinhoDeCompras() {
-        this.itensList = new ArrayList<>();
-        this.itensRemovidos = new ArrayList<>();
+        itens = new HashMap<>();
+        itensRemovidos = new ArrayList<>();
     }
 
     public void adicionarItens(String descricao, int quantidade, double preco) {
-        itensList.add(new Itens(descricao, quantidade, preco));
+        if (itens.containsKey(descricao)) {
+            Item itemExistente = itens.get(descricao);
+            itemExistente.setQuantidade(itemExistente.getQuantidade() + quantidade);
+        } else {
+            itens.put(descricao, new Item(descricao, quantidade, preco));
+        }
     }
 
     public void removerItens(String descricao) {
-        for (int i = itensList.size() - 1; i >= 0; i--) {
-            if (itensList.get(i).getDescricao().equalsIgnoreCase(descricao)) {
-                itensRemovidos.add(itensList.remove(i));
-            }
+        if (itens.containsKey(descricao)) {
+            Item itemRemovido = itens.remove(descricao);
+            itensRemovidos.add(itemRemovido);
         }
     }
 
     public int obterNumeroTotalItens() {
-        return itensList.size();
+        return itens.size();
     }
 
-    public void obterDescricoesItens(JTextArea area) {
-        if (itensList.isEmpty()) {
+    public void obterDescricoesItens(JTextArea area, JLabel valorTotalLabel) {
+        if (itens.isEmpty()) {
             area.setText("A lista de itens está vazia.");
         } else {
             double valorTotalLista = 0;
-            for (int i = 0; i < itensList.size(); i++) {
-                Itens item = itensList.get(i);
+            for (Item item : itens.values()) {
                 double valorTotalItem = item.getPreco() * item.getQuantidade();
-                area.append((i + 1) + ". " + item.getDescricao() +
-                        " - Quantidade: " + item.getQuantidade() +
+                area.append(item.getDescricao() + " - Quantidade: " + item.getQuantidade() +
                         " - Preço Unitário: R$ " + String.format("%.2f", item.getPreco()) +
                         " - Valor Total: R$ " + String.format("%.2f", valorTotalItem) + "\n");
                 valorTotalLista += valorTotalItem;
             }
             area.append("\nValor Total da Lista: R$ " + String.format("%.2f", valorTotalLista));
+            valorTotalLabel.setText("Valor Total: R$ " + String.format("%.2f", valorTotalLista)); // Atualiza o valor total
         }
     }
 
@@ -52,14 +60,14 @@ public class CarrinhoDeCompras {
         if (itensRemovidos.isEmpty()) {
             area.setText("A lista de itens removidos está vazia.");
         } else {
-            for (Itens i : itensRemovidos) {
-                area.append(i.getDescricao() + " - Quantidade: " + i.getQuantidade() +
-                        " - Preço Unitário: R$ " + String.format("%.2f", i.getPreco()) + "\n");
+            for (Item item : itensRemovidos) {
+                area.append(item.getDescricao() + " - Quantidade: " + item.getQuantidade() +
+                        " - Preço Unitário: R$ " + String.format("%.2f", item.getPreco()) + "\n");
             }
         }
     }
 
-    public List<Itens> getItensRemovidos() {
+    public List<Item> getItensRemovidos() {
         return itensRemovidos;
     }
 }

@@ -1,13 +1,27 @@
-
 package carrinhoDeCompra;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.text.NumberFormat;
 import java.util.InputMismatchException;
+import java.util.Locale;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 public class CarrinhoDeCompraGUI {
 
@@ -16,8 +30,9 @@ public class CarrinhoDeCompraGUI {
     private JFrame frame;
     private JPanel mainPanel;
     private JTextField descricaoField, quantidadeField, precoField;
-    private JButton removerButton, listarButton, listarRemovidosButton, sairButton;
+    private JButton adicionarButton, removerButton, listarButton, listarRemovidosButton, sairButton;
     private JTextArea itensArea, itensRemovidosArea;
+    private JLabel valorTotalLabel; // Label para exibir o valor total
 
     public CarrinhoDeCompraGUI() {
         carrinho = new CarrinhoDeCompras();
@@ -27,29 +42,37 @@ public class CarrinhoDeCompraGUI {
     private void criarGUI() {
         frame = new JFrame("Carrinho de Compras");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 400);
+        frame.setSize(600, 400); // Define o tamanho inicial
         frame.setLocationRelativeTo(null);
 
         mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Painel de entrada de dados
-        JPanel inputPanel = new JPanel(new GridLayout(4, 2, 10, 10));
+        // Painel de entrada de dados (Grid de 3 colunas)
+        JPanel inputPanel = new JPanel(new GridLayout(4, 3, 10, 10)); // Grid de 3 colunas
         inputPanel.setBorder(BorderFactory.createTitledBorder("Adicionar Item"));
 
+        // Primeira coluna (rótulos)
         JLabel descricaoLabel = new JLabel("Descrição:");
-        descricaoField = new JTextField();
         JLabel quantidadeLabel = new JLabel("Quantidade:");
-        quantidadeField = new JTextField();
         JLabel precoLabel = new JLabel("Preço Unitário:");
-        precoField = new JTextField();
 
+        // Segunda e terceira colunas mescladas (campos de entrada e botão)
+        descricaoField = new JTextField();
+        quantidadeField = new JTextField();
+        precoField = new JTextField();
+        adicionarButton = new JButton("Adicionar Item");
+
+        // Mescla as colunas 2 e 3 para os campos de entrada e o botão
         inputPanel.add(descricaoLabel);
         inputPanel.add(descricaoField);
+        inputPanel.add(new JLabel()); // Adiciona um JLabel vazio para mesclar as colunas
         inputPanel.add(quantidadeLabel);
         inputPanel.add(quantidadeField);
+        inputPanel.add(new JLabel()); // Adiciona um JLabel vazio para mesclar as colunas
         inputPanel.add(precoLabel);
         inputPanel.add(precoField);
+        inputPanel.add(adicionarButton); // Botão na última linha
 
         // Painel de botões
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -64,21 +87,34 @@ public class CarrinhoDeCompraGUI {
         buttonPanel.add(sairButton);
 
         // Painel de áreas de texto
-        JPanel outputPanel = new JPanel(new GridLayout(1, 2, 10, 10));
+        JPanel outputPanel = new JPanel(new GridLayout(1, 2, 10, 10)); // 2 colunas
         outputPanel.setBorder(BorderFactory.createTitledBorder("Lista de Itens"));
 
+        // Painel da esquerda (itens)
+        JPanel itensPanel = new JPanel(new BorderLayout());
         itensArea = new JTextArea();
         itensArea.setEditable(false);
         itensArea.setFont(new Font("Arial", Font.PLAIN, 13));
         JScrollPane itensScrollPane = new JScrollPane(itensArea);
+        itensPanel.add(itensScrollPane, BorderLayout.CENTER); // Centraliza a área de texto
 
+        // Label para o valor total
+        valorTotalLabel = new JLabel("Valor Total: R$ 0,00"); // Inicializa com valor 0
+        itensPanel.add(valorTotalLabel, BorderLayout.SOUTH); // Adiciona a label na parte inferior
+
+        // Painel da direita (itens removidos)
+        JPanel itensRemovidosPanel = new JPanel(new BorderLayout());
         itensRemovidosArea = new JTextArea();
         itensRemovidosArea.setEditable(false);
         itensRemovidosArea.setFont(new Font("Arial", Font.PLAIN, 13));
         JScrollPane itensRemovidosScrollPane = new JScrollPane(itensRemovidosArea);
+        itensRemovidosPanel.add(itensRemovidosScrollPane, BorderLayout.CENTER);
 
-        outputPanel.add(itensScrollPane);
-        outputPanel.add(itensRemovidosScrollPane);
+        JLabel labelRemovidos = new JLabel("Itens Removidos"); // Label acima da lista de removidos
+        itensRemovidosPanel.add(labelRemovidos, BorderLayout.NORTH); // Adiciona a label na parte superior
+
+        outputPanel.add(itensPanel); // Adiciona o painel dos itens
+        outputPanel.add(itensRemovidosPanel); // Adiciona o painel dos itens removidos
 
         // Adiciona os painéis ao mainPanel
         mainPanel.add(inputPanel, BorderLayout.NORTH);
@@ -105,6 +141,14 @@ public class CarrinhoDeCompraGUI {
                 if (precoField.getText().isEmpty()) {
                     adicionarItem();
                 }
+            }
+        });
+
+        // Adicionar Listener para o botão "Adicionar"
+        adicionarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                adicionarItem();
             }
         });
 
@@ -152,23 +196,29 @@ public class CarrinhoDeCompraGUI {
 
         try {
             quantidade = Integer.parseInt(quantidadeField.getText());
-            preco = Double.parseDouble(precoField.getText());
+            // Formata o preço para o padrão brasileiro (ex: 10,00)
+            NumberFormat format = NumberFormat.getInstance(Locale.forLanguageTag("pt-BR"));
+            preco = format.parse(precoField.getText()).doubleValue(); // Parse do preço
+
             carrinho.adicionarItens(descricao, quantidade, preco);
-            limparCamposDeEntrada(); 
-            atualizarListas(); 
+            limparCamposDeEntrada();
+            atualizarListas();
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(frame, "Por favor, insira valores numéricos válidos para quantidade e preço.", "Erro", JOptionPane.ERROR_MESSAGE);
         } catch (InputMismatchException e) {
             JOptionPane.showMessageDialog(frame, "Por favor, insira valores numéricos válidos para quantidade e preço.", "Erro", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(frame, "Formato de preço inválido. Use o padrão brasileiro (ex: 10,00).", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void atualizarListas() {
         itensArea.setText("");
         itensRemovidosArea.setText("");
+        valorTotalLabel.setText("Valor Total: R$ 0,00"); // Zera o valor total
 
         if (carrinho.obterNumeroTotalItens() > 0) {
-            carrinho.obterDescricoesItens(itensArea);
+            carrinho.obterDescricoesItens(itensArea, valorTotalLabel); // Passa a label para o método
         } else {
             itensArea.setText("A lista de itens está vazia.");
         }

@@ -1,12 +1,12 @@
 package carrinhoDeCompra;
 
-public class Itens {
+public class Item {
     private String descricao;
     private int quantidade;
     private double preco;
 
     // Construtor que recebe descrição, quantidade e preço
-    public Itens(String descricao, int quantidade, double preco) {
+    public Item(String descricao, int quantidade, double preco) {
         this.descricao = descricao;
         this.quantidade = quantidade;
         this.preco = preco;
@@ -23,5 +23,10 @@ public class Itens {
 
     public double getPreco() {
         return preco;
+    }
+
+    // Método para definir a quantidade (para atualizar a quantidade no carrinho)
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
 }
