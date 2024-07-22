@@ -19,6 +19,12 @@ public class Livros {
         return titulo;
     }
     public String getAutor() {
-        return titulo;
+        return autor;
     }
+
+    @Override
+    public String toString() {
+        return "Livros [isbn=" + isbn + ", titulo=" + titulo + ", autor=" + autor + "]";
+    }
+    
 }
