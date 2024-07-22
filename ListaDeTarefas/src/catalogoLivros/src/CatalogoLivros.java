@@ -1,9 +1,11 @@
+package catalogoLivros.src;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CatalogoLivros {
+public class CatalogoLivros<Livro> {
 
     private Map<String, Livro> livros;
     private List<Livro> livrosRemovidos;
@@ -14,7 +16,7 @@ public class CatalogoLivros {
     }
 
     public void adicionarLivro(Livro livro) {
-        livros.put(livro.getIsbn(), livro);
+        livros.put(((Object) livro).getIsbn(), livro);
     }
 
     public void removerLivro(String isbn) {
@@ -28,9 +30,7 @@ public class CatalogoLivros {
         return livros.get(isbn);
     }
 
-    public Map<String, Livro> getLivros() {
-        return livros;
-    }
+ 
 
     public List<Livro> getLivrosRemovidos() {
         return livrosRemovidos;
