@@ -1,30 +1,39 @@
 package catalogoLivros.src;
 
 public class Livros {
-    private String isbn;
+    //atributos
     private String titulo;
     private String autor;
-
-    public void Livro(String isbn, String titulo, String autor) {
-        this.isbn = isbn;
-        this.titulo = titulo;
-        this.autor = autor;
+    private int anoPublicacao;
+  
+    public Livros(String titulo, String autor, int anoPublicacao) {
+      this.titulo = titulo;
+      this.autor = autor;
+      this.anoPublicacao = anoPublicacao;
     }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
+  
     public String getTitulo() {
-        return titulo;
+      return titulo;
     }
+  
+    public void setAutor(String autor) {
+      this.autor = autor;
+    }
+  
     public String getAutor() {
-        return autor;
+      return autor;
     }
-
+  
+    public int getAnoPublicacao() {
+      return anoPublicacao;
+    }
+  
     @Override
     public String toString() {
-        return "Livros [isbn=" + isbn + ", titulo=" + titulo + ", autor=" + autor + "]";
+      return "Livro{" +
+          "titulo='" + titulo + '\'' +
+          ", autor='" + autor + '\'' +
+          ", anoPublicacao=" + anoPublicacao +
+          '}';
     }
-    
-}
+  }
