@@ -25,7 +25,7 @@ Este projeto é um aplicativo de catálogo de livros desenvolvido em Java usando
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/usuario/catalogo-livros-gui.git
+   git clone https://github.com/usuario/catalogo-livros-gui.git](https://github.com/jhonnylucius/Collection-Framework-API---DIO---Santander-BootCamp-2024.git
    
 2. Navegue até o diretório do projeto:
    '''bash
