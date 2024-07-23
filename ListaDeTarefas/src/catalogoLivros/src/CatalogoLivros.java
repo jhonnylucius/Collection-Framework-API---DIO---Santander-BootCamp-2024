@@ -1,123 +1,194 @@
 package catalogoLivros.src;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Scanner;
 
 public class CatalogoLivros {
-    //atributo
-    private List<Livros> livroList;
-    private List<String> livrosRemovidos; // Lista para armazenar os livros removidos
+
+    private List<Livros> livros;
+    private List<String> livrosRemovidos;
 
     public CatalogoLivros() {
-        this.livroList = new ArrayList<>();
-        this.livrosRemovidos = new ArrayList<>();
+        livros = new ArrayList<>();
+        livrosRemovidos = new ArrayList<>();
+        carregarLivrosRemovidos();
     }
 
-    public void adicionarLivros(Livros livros) {
-        livroList.add(livros);
+    public void adicionarLivros(Livros livro) {
+        livros.add(livro);
     }
 
     public void removerLivros(String titulo) {
-        livroList.removeIf(livro -> livro.getTitulo().equalsIgnoreCase(titulo));
-        // Adiciona o livro removido à lista de removidos com data e hora
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        String dataHora = now.format(formatter);
-        livrosRemovidos.add(titulo + " - Removido em: " + dataHora);
+        livros.removeIf(l -> l.getTitulo().equals(titulo));
     }
 
     public Livros consultarLivro(String titulo) {
-        for (Livros livro : livroList) {
-            if (livro.getTitulo().equalsIgnoreCase(titulo)) {
+        for (Livros livro : livros) {
+            if (livro.getTitulo().equals(titulo)) {
                 return livro;
             }
         }
-        return null; // Livro não encontrado
+        return null;
     }
 
     public List<Livros> getLivros() {
-        return new ArrayList<>(livroList); // Retorna uma cópia da lista para evitar modificações externas
+        return livros;
     }
 
     public List<String> getLivrosRemovidos() {
-        return new ArrayList<>(livrosRemovidos); // Retorna uma cópia da lista para evitar modificações externas
+        return livrosRemovidos;
     }
 
-    public void adicionarLivro(String titulo, String autor, int anoPublicacao) {
-        livroList.add(new Livros(titulo, autor, anoPublicacao));
+    public void salvarLivroRemovido(String titulo, String dataHora) throws IOException {
+        livrosRemovidos.add(titulo + " - Removido em: " + dataHora);
+        File arquivo = new File("src/registros/" + titulo + ".txt");
+        if (!arquivo.exists()) {
+            arquivo.createNewFile();
+        }
+        FileWriter writer = new FileWriter(arquivo);
+        writer.write(titulo + "\n");
+        writer.write("Data de Remoção: " + dataHora + "\n");
+        writer.close();
     }
 
-    public List<Livros> pesquisarPorAutor(String autor) {
-        List<Livros> livrosPorAutor = new ArrayList<>();
-        if (!livroList.isEmpty()) {
-            for (Livros l : livroList) {
-                if (l.getAutor().equalsIgnoreCase(autor)) {
-                    livrosPorAutor.add(l);
+    public void salvarLivro(Livros livro) throws IOException {
+        File arquivo = new File("src/registros/" + livro.getTitulo() + ".txt");
+        if (!arquivo.exists()) {
+            arquivo.createNewFile();
+        }
+        FileWriter writer = new FileWriter(arquivo);
+        writer.write(livro.getTitulo() + "\n");
+        writer.write("Autor: " + livro.getAutor() + "\n");
+        writer.write("Ano de Publicação: " + livro.getAnoPublicacao() + "\n");
+        writer.write("Data de Inclusão: " + livro.getDataInclusao() + "\n");
+        writer.close();
+    }
+
+    private void carregarLivrosRemovidos() {
+        File diretorio = new File("src/registros");
+        if (!diretorio.exists()) {
+            diretorio.mkdir();
+            return;
+        }
+        File[] arquivos = diretorio.listFiles();
+        if (arquivos != null) {
+            for (File arquivo : arquivos) {
+                try (Scanner scanner = new Scanner(new FileReader(arquivo))) {
+                    String titulo = scanner.nextLine();
+                    String dataRemocao = scanner.nextLine().substring(16); // Remove "Data de Remoção: "
+                    livrosRemovidos.add(titulo + " - Removido em: " + dataRemocao);
+                } catch (IOException e) {
+                    System.err.println("Erro ao carregar livro removido: " + e.getMessage());
                 }
             }
-            return livrosPorAutor;
-        } else {
-            throw new RuntimeException("A lista está vazia!");
         }
     }
 
-    public List<Livros> pesquisarPorIntervaloAnos(int anoInicial, int anoFinal) {
-        List<Livros> livrosPorIntervaloAnos = new ArrayList<>();
-        if (!livroList.isEmpty()) {
-            for (Livros l : livroList) {
-                if (l.getAnoPublicacao() >= anoInicial && l.getAnoPublicacao() <= anoFinal) {
-                    livrosPorIntervaloAnos.add(l);
+    private void carregarLivros() {
+        File diretorio = new File("src/registros");
+        if (!diretorio.exists()) {
+            diretorio.mkdir();
+            return;
+        }
+        File[] arquivos = diretorio.listFiles();
+        if (arquivos != null) {
+            for (File arquivo : arquivos) {
+                try (Scanner scanner = new Scanner(new FileReader(arquivo))) {
+                    String titulo = scanner.nextLine();
+                    String autor = scanner.nextLine().substring(6); // Remove "Autor: "
+                    String anoPublicacao = scanner.nextLine().substring(18); // Remove "Ano de Publicação: "
+                    String dataInclusao = scanner.nextLine().substring(17); // Remove "Data de Inclusão: "
+                    Livros livro = new Livros(titulo, autor, Integer.parseInt(anoPublicacao));
+                    livro.setDataRemocao(null); // Inicializa data de remoção como null
+                    livros.add(livro);
+                } catch (IOException e) {
+                    System.err.println("Erro ao carregar livro: " + e.getMessage());
                 }
             }
-            return livrosPorIntervaloAnos;
-        } else {
-            throw new RuntimeException("A lista está vazia!");
         }
     }
 
-    public Livros pesquisarPorTitulo(String titulo) {
-        Livros livroPorTitulo = null;
-        if (!livroList.isEmpty()) {
-            for (Livros l : livroList) {
-                if (l.getTitulo().equalsIgnoreCase(titulo)) {
-                    livroPorTitulo = l;
-                    break;
+    // Método para filtrar livros com base nos filtros
+    public List<Livros> filtrarLivros(List<String> filtros) {
+        List<Livros> livrosEncontrados = new ArrayList<>();
+        File diretorio = new File("src/registros");
+        if (!diretorio.exists()) {
+            diretorio.mkdir();
+            return livrosEncontrados; // Retorna lista vazia se o diretório não existir
+        }
+        File[] arquivos = diretorio.listFiles();
+        if (arquivos != null) {
+            for (File arquivo : arquivos) {
+                try (Scanner scanner = new Scanner(new FileReader(arquivo))) {
+                    String titulo = scanner.nextLine();
+                    String autor = scanner.nextLine().substring(6); // Remove "Autor: "
+                    String anoPublicacao = scanner.nextLine().substring(18); // Remove "Ano de Publicação: "
+                    String dataInclusao = scanner.nextLine().substring(17); // Remove "Data de Inclusão: "
+
+                    Livros livro = new Livros(titulo, autor, Integer.parseInt(anoPublicacao));
+                    livro.setDataRemocao(LocalDateTime.parse(dataInclusao, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))); // Define a data de remoção como data de inclusão
+
+                    // Verifica se o livro atende aos filtros
+                    boolean correspondeAtodosFiltros = true;
+                    for (String filtro : filtros) {
+                        switch (filtro) {
+                            case "titulo":
+                                if (!livro.getTitulo().toLowerCase().contains(filtro.toLowerCase())) {
+                                    correspondeAtodosFiltros = false;
+                                }
+                                break;
+                            case "autor":
+                                if (!livro.getAutor().toLowerCase().contains(filtro.toLowerCase())) {
+                                    correspondeAtodosFiltros = false;
+                                }
+                                break;
+                            case "anoPublicacao":
+                                if (Integer.parseInt(anoPublicacao) != livro.getAnoPublicacao()) {
+                                    correspondeAtodosFiltros = false;
+                                }
+                                break;
+                            case "diaEntrada":
+                                LocalDate dataInclusaoLocalDate = LocalDate.parse(dataInclusao, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+                                if (dataInclusaoLocalDate.getDayOfMonth() != LocalDate.now().getDayOfMonth()) {
+                                    correspondeAtodosFiltros = false;
+                                }
+                                break;
+                            case "periodoEntrada":
+                                if (!livro.getDataInclusao().toString().contains(filtro.toLowerCase())) {
+                                    correspondeAtodosFiltros = false;
+                                }
+                                break;
+                            case "periodoRemocao":
+                                if (livro.getDataRemocao() != null && !livro.getDataRemocao().toString().contains(filtro.toLowerCase())) {
+                                    correspondeAtodosFiltros = false;
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        if (!correspondeAtodosFiltros) {
+                            break;
+                        }
+                    }
+
+                    if (correspondeAtodosFiltros) {
+                        livrosEncontrados.add(livro);
+                    }
+                } catch (IOException e) {
+                    System.err.println("Erro ao carregar livro: " + e.getMessage());
                 }
             }
-            return livroPorTitulo;
-        } else {
-            throw new RuntimeException("A lista está vazia!");
         }
-    }
-
-    public static void main(String[] args) {
-        // Criando uma instância do catálogo de livros
-        CatalogoLivros catalogoLivros = new CatalogoLivros();
-
-        // Adicionando livros ao catálogo
-        catalogoLivros.adicionarLivro("Microsserviços Prontos Para a Produção", "Susan J. Fowler", 2017);
-        catalogoLivros.adicionarLivro("Java Guia do Programador", "Peter Jandl Junior", 2021);
-        catalogoLivros.adicionarLivro("Código Limpo", "Robert C. Martin", 2009);
-        catalogoLivros.adicionarLivro("O Codificador Limpo", "Robert C. Martin", 2012);
-
-        // Exibindo livros pelo mesmo autor
-        System.out.println(catalogoLivros.pesquisarPorAutor("Robert C. Martin"));
-
-        // Exibindo livros pelo mesmo autor (caso em que não há livros de um autor específico)
-        System.out.println(catalogoLivros.pesquisarPorAutor("Autor Inexistente"));
-
-        // Exibindo livros dentro de um intervalo de anos
-        System.out.println(catalogoLivros.pesquisarPorIntervaloAnos(2010, 2022));
-
-        // Exibindo livros dentro de um intervalo de anos (caso em que não há livros no intervalo)
-        System.out.println(catalogoLivros.pesquisarPorIntervaloAnos(2025, 2030));
-
-        // Exibindo livros por título
-        System.out.println(catalogoLivros.pesquisarPorTitulo("Java Guia do Programador"));
-
-        // Exibindo livros por título (caso em que não há livros com o título especificado)
-        System.out.println(catalogoLivros.pesquisarPorTitulo("Título Inexistente"));
+        return livrosEncontrados;
     }
 }

@@ -67,7 +67,8 @@ public class ListaTarefa {
             System.out.println("4. Listar Tarefas Removidas"); // Nova opção para listar tarefas removidas
             System.out.println("5. Sair");
             System.out.print("Escolha uma opção: ");
-//colocando um switch para fazer a interação com as opões escolhidas
+//colocando um switch para fazer a interação com as opões escolhidas3
+
             try {
                 int opcao = scanner.nextInt();
                 scanner.nextLine(); // Consumir a quebra de linha
