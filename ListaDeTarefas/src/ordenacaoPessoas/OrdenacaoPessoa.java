@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import ordenacaoPessoas.Pessoa.ComparetorPorAltura;
-
 public class OrdenacaoPessoa {
   //atributo
   private List<Pessoa> pessoaList;
