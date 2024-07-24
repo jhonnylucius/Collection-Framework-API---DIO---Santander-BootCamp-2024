@@ -55,13 +55,12 @@ public class ConjuntoPalavrasUnicas {
     conjuntoLinguagens.exibirPalavrasUnicas();
 
     
-    conjuntoLinguagens.removerPalavra("Python");
-    conjuntoLinguagens.exibirPalavrasUnicas();
+    conjuntoLinguagens.removerPalavra("Ruby");
 
-    // Removendo uma linguagem inexistente
-    conjuntoLinguagens.removerPalavra("Swift");
+    // Removendo uma palavvra inexistente
+    conjuntoLinguagens.removerPalavra("pão de queijo");
 
-    // Verificando se uma linguagem está no conjunto
+    // Verificando se uma palavra está no conjunto
     System.out.println("A linguagem 'Java' está no conjunto? " + conjuntoLinguagens.verificarPalavra("Java"));
     System.out.println("A linguagem 'Python' está no conjunto? " + conjuntoLinguagens.verificarPalavra("Python"));
 
