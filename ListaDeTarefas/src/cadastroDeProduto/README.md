@@ -1,8 +1,8 @@
-## Este projeto implementa um sistema simples de cadastro de produtos utilizando Java. O código foi desenvolvido no VS Code.
+# Este projeto implementa um sistema simples de cadastro de produtos utilizando Java. O código foi desenvolvido no VS Code
 
 </br>
 
-### Objetivo: </br>
+## Objetivo:</br>
 
 O sistema permite adicionar produtos com código, nome, preço e quantidade.</br> Os produtos podem ser exibidos ordenados por nome ou por preço.</br>
 </br>
@@ -37,6 +37,7 @@ Executar o programa: Execute java cadastroDeProduto.CadastroProdutos no terminal
 </br>
 
 ### Exemplo de uso:</br>
+
 </br>
 Ao executar o programa, serão adicionados 4 produtos ao cadastro:</br>
 </br>
@@ -52,6 +53,7 @@ O programa exibirá a lista de produtos no cadastro, seguido pelas listas de pro
 </BR>
 
 ### Recursos adicionais:</br>
+
 </br>
 O código utiliza a classe HashSet para evitar duplicatas de produtos com o mesmo código.</br>
 </br>
@@ -61,6 +63,7 @@ A classe ComparatorPorPreco implementa a interface Comparator para comparar prod
 </br>
 
 ### Observações:</br>
+
 </br>
 O código é um exemplo simples e pode ser expandido para incluir funcionalidades adicionais,</br> como editar ou remover produtos.</br>
 </br>
