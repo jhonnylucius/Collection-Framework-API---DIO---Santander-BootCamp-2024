@@ -43,7 +43,7 @@ public class CadastroProdutos {
 
     // Adicionando produtos ao cadastro "L" e "d" na frente de cod e preco informa
     // o tipo da variavel, long e Double
-    // o produto de codigo repetido não é gravado, pois o set não aceita elementos repetidos
+    // o produto de codigo repetido não é gravado, pois não aceita elementos repetidos
     cadastroProdutos.adicionarProduto(1L, "Smartphone", 1000d, 10);
     cadastroProdutos.adicionarProduto(2L, "Notebook", 1500d, 5);
     cadastroProdutos.adicionarProduto(1L, "Mouse", 30d, 20);
