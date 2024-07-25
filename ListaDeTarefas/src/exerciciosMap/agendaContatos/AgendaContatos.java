@@ -51,6 +51,9 @@ public class AgendaContatos {
 
         agendaContatos.exibirContatos(); // Exibe os contatos
 
+        //agendaContatos.removerContato("Luciano");
+        //agendaContatos.exibirContatos();
+        // adicionado uma pesquisa
         // Exemplo de pesquisa
         Integer telefoneLucas = agendaContatos.pesquisarPorNome("lucas");
         if (telefoneLucas != null) {
