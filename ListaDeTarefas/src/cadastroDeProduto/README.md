@@ -16,6 +16,7 @@ Estrutura do projeto:</br>
 </br>
 O projeto é composto pelas seguintes classes:</br>
 Produto.java: Define a classe Produto com os atributos e métodos para representar um produto.</br>
+</br>
 CadastroProdutos.java: Define a classe CadastroProdutos com os métodos para adicionar</br> produtos, exibir produtos por nome ou por preço.</br></br>
 </br>
 Como executar o projeto:</br>
