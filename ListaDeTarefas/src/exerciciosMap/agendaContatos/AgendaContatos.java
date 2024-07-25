@@ -34,7 +34,7 @@ public class AgendaContatos {
         }
     }
 
-    // Corrigido para procurar o número se a agenda não estiver vazia
+    // Metodo de pesquisa o número se a agenda não estiver vazia
     public Integer pesquisarPorNome(String nome) {
         Integer numeroPorNome = null;
         if (!agendaContatosMap.isEmpty()) {
