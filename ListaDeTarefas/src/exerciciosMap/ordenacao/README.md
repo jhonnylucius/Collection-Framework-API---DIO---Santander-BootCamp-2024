@@ -69,12 +69,3 @@
 7. Remova um livro pelo título e exiba a lista atualizada de livros.</br>
 </br>
 
-### Estrutura do Projeto</br>
-
-<code)exerciciosMap/
-├── ordenacao/
-│   ├── Livro.java
-│   ├── ComparatorPorPreco.java
-│   ├── ComparatorPorAutor.java
-│   └── LivrariaOnline.java
-└── README.md</code>
