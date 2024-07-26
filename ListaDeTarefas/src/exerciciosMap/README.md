@@ -16,8 +16,6 @@
 8. Pesquisar por padrões: Permite buscar palavras que correspondam a um padrão fornecido </br>usando expressões regulares (regex).</br>
 </br>
 
-## Como usar:</br>
-
 </br>
 
 ## Observações:</br>
