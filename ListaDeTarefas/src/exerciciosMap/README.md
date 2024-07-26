@@ -3,7 +3,9 @@
 1. Este projeto implementa um dicionário simples em Java utilizando um HashMap para armazenar palavras e suas definições. O dicionário oferece funcionalidades básicas como adicionar, remover e pesquisar palavras, além de recursos adicionais como validação de entrada, persistência de dados, organização por ordem alfabética e busca por padrões (regex).</br>
 
 </br>
+
 ## Funcionalidades:</br>
+
 </br>
 
 1. Adicionar palavras: Permite adicionar novas palavras e suas definições ao dicionário, com validação para evitar duplicados e entradas inválidas.</br>
