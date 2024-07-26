@@ -24,3 +24,10 @@
 
 4. O código utiliza a classe TreeMap para ordenar os eventos por data.</br>
 
+### Melhorias:</br>
+
+1. Salvar e carregar a agenda de um arquivo para persistir os dados.</br>
+
+2. Implementar a possibilidade de editar ou remover eventos da agenda.</br>
+3. Criar uma interface gráfica para interação com a agenda, tornando-a mais amigável.</br>
+4. Adicionar funcionalidades para gerenciar diferentes tipos de eventos, como eventos </br>recorrentes ou eventos com horários específicos.</br>
