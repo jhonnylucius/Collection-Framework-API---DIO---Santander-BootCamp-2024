@@ -1,4 +1,4 @@
-package exerciciosMap.agendaContatos;
+package exerciciosMap;
 
 import java.util.HashMap;
 import java.util.Map;
