@@ -16,8 +16,6 @@
 8. Pesquisar por padrões: Permite buscar palavras que correspondam a um padrão fornecido </br>usando expressões regulares (regex).</br>
 </br>
 
-</br>
-
 ## Observações:</br>
 
 1. O dicionário é salvo em um arquivo binário chamado "dicionario.dat" na pasta do projeto.</br>
@@ -25,7 +23,7 @@
 3. As funcionalidades de organização de dados e busca por padrões podem ser expandidas para atender a diferentes necessidades.
 </br>
 
-### Melhorias:</br>
+## Melhorias:</br>
 
 </br>
 
@@ -38,3 +36,22 @@
 </br>
 
 4. Este projeto é um exemplo básico de como implementar um dicionário em Java com funcionalidades adicionais. O código pode ser expandido e adaptado para atender a diferentes necessidades.
+
+## Segundo app</br>
+
+### Agenda de Contatos - Um gerenciador simples de contatos em Java</br>
+
+- Este projeto implementa uma agenda de contatos simples em Java utilizando um HashMap para armazenar os nomes e telefones dos contatos.</br>
+</br>
+
+### Funcionalidades:</br>
+
+1. Adicionar Contatos: Permite adicionar novos contatos à agenda, armazenando</br> o nome e o número de telefone.</br>
+
+2. Remover Contatos: Remove um contato específico da agenda pelo nome.</br>
+</br>
+
+3. Exibir Contatos: Exibe todos os contatos da agenda de forma organizada,</br> mostrando o nome e o telefone de cada contato.</br>
+</br>
+
+4. Pesquisar Contatos: Permite pesquisar o telefone de um contato pelo nome. Se o contato não estiver na agenda, a pesquisa retorna null</br>
