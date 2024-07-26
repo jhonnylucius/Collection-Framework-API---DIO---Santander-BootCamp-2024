@@ -1,4 +1,4 @@
-package exerciciosMap;
+package exerciciosMap.operacoesBasicas;
 
 import java.util.HashMap;
 import java.util.Map;
