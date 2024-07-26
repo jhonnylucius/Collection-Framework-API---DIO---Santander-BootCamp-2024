@@ -5,20 +5,26 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 /**
- * Representa uma operação que não aceita nenhum argumento e retorna um resultado do tipo T.
+ * Representa uma operação que não aceita nenhum argumento e retorna um 
+ * resultado do tipo T.(consumer não retorna nada)
  * É comumente usada para criar ou fornecer novos objetos de um determinado tipo.
  */
+
+
 public class SupplierExample {
   public static void main(String[] args) {
-    // Usar o Supplier com expressão lambda para fornecer uma saudação personalizada
-    Supplier<String> saudacao = () -> "Olá, seja bem-vindo(a)!";
+    
+    Supplier<String> saudacao = () -> "Olá, seja bem-vindo(a)!"; // Cria uma instância de Supplier chamada saudacao
+     // que recebe uma expressão lambda que retorna a string "Olá, seja bem-vindo(a)!"
 
-    // Usar o Supplier para obter uma lista com 5 saudações
-    List<String> listaSaudacoes = Stream.generate(saudacao)
-        .limit(5)
-        .toList();
+    // Cria um Stream infinito de strings usando o método generate,
+    // que recebe uma expressão lambda que retorna a string "Olá e tchau"
+    List<String> listaSaudacoes = Stream.generate(() -> "Olá flor do dia!") 
+        .limit(3) // Limita o Stream a 3 elementos
+        .toList(); // Coleta os elementos do Stream em uma lista
+        
 
-    // Imprimir as saudações geradas
-    listaSaudacoes.forEach(System.out::println);
+    // Itera sobre cada elemento da lista e imprime no console
+    listaSaudacoes.forEach(System.out :: println); 
   }
 }
