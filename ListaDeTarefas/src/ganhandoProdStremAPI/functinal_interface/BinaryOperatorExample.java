@@ -11,14 +11,16 @@ import java.util.function.BinaryOperator;
 public class BinaryOperatorExample {
   public static void main(String[] args) {
     // Criar uma lista de números inteiros
-    List<Integer> numeros = Arrays.asList(1, 2, 3, 4, 5);
+    List<Integer> numeros = Arrays.asList(1, 2, 3, 4, 5, 6, 7);
 
     // Usar o BinaryOperator com expressão lambda para somar dois números inteiros
+    // BinaryOperator<Integer> somar = (num1, num2) -> num1 + num2; (código com lambda)
     BinaryOperator<Integer> somar = Integer::sum;
 
     // Usar o BinaryOperator para somar todos os números no Stream
     int resultado = numeros.stream()
         .reduce(0, Integer::sum);
+    // "identity é uma varíavel temporaria e incia com 0"(acima)    
 
     // Imprimir o resultado da soma
     System.out.println("A soma dos números é: " + resultado);
