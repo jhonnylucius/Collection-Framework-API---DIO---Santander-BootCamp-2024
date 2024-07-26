@@ -69,3 +69,57 @@
 7. Remova um livro pelo título e exiba a lista atualizada de livros.</br>
 </br>
 
+### Melhorias que podem ser feitas no Código</br>
+
+- Utilização de Streams e Lambdas (Java 8+):</br>
+
+- Utilize streams e lambdas para tornar o código mais conciso e legível.</br>
+Documentação e Comentários:</br>
+
+- Adicione JavaDoc para classes e métodos, explicando o propósito e a lógica de cada um.</br>
+Melhore os comentários no código, especialmente para partes complexas.</br>
+</br>
+
+1. Tratamento de Erros:</br>
+</br>
+
+2. Adicione tratamento de exceções adequado, como try-catch blocks para operações críticas.</br>
+
+3. Adicione mensagens de erro amigáveis ao usuário.</br>
+
+### Validações: </br>
+
+1. Adicione validações para os métodos, por exemplo, verificar se o livro já existe antes de </br>adicionar e se o título é válido ao remover.</br>
+
+## Testes Unitários:</br>
+
+1. Adicione testes unitários usando frameworks como JUnit para garantir que as </br>funcionalidades estão corretas e evitar regressões.</br>
+</br>
+
+2. Separação de Responsabilidades:</br>
+</br>
+
+- Separe as responsabilidades em diferentes classes e pacotes, como uma</br> classe de serviço para a lógica de negócio e uma classe de repositório para operações de dados.</br>
+
+## Melhorias Funcionais</br>
+
+1. Interface Gráfica (GUI):</br>
+
+- Desenvolva uma interface gráfica para a livraria usando JavaFX ou Swing para tornar a </br>aplicação mais amigável ao usuário.</br>
+
+- Persistência de Dados:</br>
+
+- Implemente persistência de dados usando arquivos, banco de dados ou serialização</br> para que os livros adicionados sejam salvos entre execuções.</br>
+
+## Busca Avançada:</br>
+
+- Adicione funcionalidades de busca avançada, como buscar por faixa de preço, </br>palavras-chave no título, etc.</br>
+</br>
+
+## Ordenação por Outros Critérios:</br>
+
+- Permita ordenação por outros critérios, como data de publicação ou popularidade.</br>
+
+-Internacionalização (i18n):</br>
+
+- Adicione suporte para múltiplos idiomas para tornar a aplicação acessível </br>a um público mais amplo.
